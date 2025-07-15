@@ -1,0 +1,28 @@
+ {
+    "name": "sp500-stock-analysis-dashboard",
+    "version": "1.0.0",
+    "description": "A comprehensive stock analysis dashboard for S&P 500 companies with real-time data and advanced analytics",
+    "main": "index.html",
+    "scripts": {
+      "start": "python -m http.server 8000",
+      "build": "echo 'No build process needed for static site'",
+      "deploy": "netlify deploy --prod --dir .",
+      "dev": "python -m http.server 8000"
+    },
+    "keywords": [
+      "stock",
+      "analysis",
+      "dashboard",
+      "S&P500",
+      "finance",
+      "real-time",
+      "investment"
+    ],
+    "author": "Stock Analysis Dashboard",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/JackSparrow7777777/sp500-stock-analysis-dashboard"
+    },
+    "homepage": "https://your-deployed-site.netlify.app"
+  }
