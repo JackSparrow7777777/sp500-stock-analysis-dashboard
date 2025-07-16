@@ -1,262 +1,189 @@
- <!DOCTYPE html>
-     <html lang="en">
-     <head>
-         <meta charset="UTF-8">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>S&P 500 Stock Analysis Dashboard</title>
-         <link rel="stylesheet" href="styles.css">
-         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-     </head>
-     <body>
-         <div class="container">
-             <header>
-                 <h1>S&P 500 Stock Analysis Dashboard</h1>
-                 <div class="search-bar">
-                     <input type="text" id="stockSearch" placeholder="Search for a stock symbol (e.g., AAPL, MSFT)">
-                     <button onclick="searchStock()">Search</button>
-                 </div>
-             </header>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>S&P 500 Stock Analysis Dashboard</title>
+      <link rel="stylesheet" href="styles.css">
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+      <div class="container">
+          <header>
+              <h1>S&P 500 Stock Analysis Dashboard</h1>
+              <div class="search-bar">
+                  <input type="text" id="stockSearch" placeholder="Search for a stock symbol (e.g., AAPL, MSFT)">
+                  <button onclick="searchStock()">Search</button>
+              </div>
+          </header>
 
-             <div class="main-content">
-                 <div class="sidebar">
-                     <h3>Top 50 S&P 500 Companies</h3>
-                     <div id="topStocks" class="stock-list">
-                         <div class="loading">Loading top stocks...</div>
-                     </div>
-                 </div>
+          <div class="main-content">
+              <div class="sidebar">
+                  <h3>Top S&P 500 Companies</h3>
+                  <div id="topStocks" class="stock-list">
+                      <div class="loading">Loading top stocks...</div>
+                  </div>
+              </div>
 
-                 <div class="analysis-panel">
-                     <div class="tab-navigation">
-                         <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
-                         <button class="tab-btn" onclick="showTab('financial')">Financial</button>
-                         <button class="tab-btn" onclick="showTab('sentiment')">Sentiment</button>
-                         <button class="tab-btn" onclick="showTab('technical')">Technical</button>
-                         <button class="tab-btn" onclick="showTab('compare')">Compare</button>
-                         <button class="tab-btn" onclick="showTab('valuation')">Valuation</button>
-                     </div>
+              <div class="analysis-panel">
+                  <div class="tab-navigation">
+                      <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+                      <button class="tab-btn" onclick="showTab('financial')">Financial</button>
+                      <button class="tab-btn" onclick="showTab('sentiment')">Sentiment</button>
+                      <button class="tab-btn" onclick="showTab('technical')">Technical</button>
+                      <button class="tab-btn" onclick="showTab('compare')">Compare</button>
+                      <button class="tab-btn" onclick="showTab('valuation')">Valuation</button>
+                  </div>
 
-                     <div id="overview" class="tab-content active">
-                         <div class="stock-header">
-                             <h2 id="stockName">Select a stock to view analysis</h2>
-                             <div class="stock-price">
-                                 <span id="currentPrice">$0.00</span>
-                                 <span id="priceChange" class="price-change">+0.00 (0.00%)</span>
-                             </div>
-                         </div>
+                  <div id="overview" class="tab-content active">
+                      <div class="stock-header">
+                          <h2 id="stockName">Select a stock to view analysis</h2>
+                          <div class="stock-price">
+                              <span id="currentPrice">$0.00</span>
+                              <span id="priceChange" class="price-change">+0.00 (0.00%)</span>
+                          </div>
+                      </div>
 
-                         <div class="metrics-grid">
-                             <div class="metric-card">
-                                 <h4>Market Cap</h4>
-                                 <span id="marketCap">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>P/E Ratio</h4>
-                                 <span id="peRatio">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>Revenue (TTM)</h4>
-                                 <span id="revenue">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>Net Profit</h4>
-                                 <span id="netProfit">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>EPS</h4>
-                                 <span id="eps">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>Dividend Yield</h4>
-                                 <span id="dividendYield">-</span>
-                             </div>
-                         </div>
+                      <div class="metrics-grid">
+                          <div class="metric-card">
+                              <h4>Market Cap</h4>
+                              <span id="marketCap">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>P/E Ratio</h4>
+                              <span id="peRatio">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>Revenue (TTM)</h4>
+                              <span id="revenue">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>Net Profit</h4>
+                              <span id="netProfit">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>EPS</h4>
+                              <span id="eps">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>Dividend Yield</h4>
+                              <span id="dividendYield">-</span>
+                          </div>
+                      </div>
 
-                         <div class="company-info">
-                             <h3>Company Information</h3>
-                             <p id="companyDescription">Company description will appear here...</p>
-                             <div class="company-details">
-                                 <div><strong>Sector:</strong> <span id="sector">-</span></div>
-                                 <div><strong>Industry:</strong> <span id="industry">-</span></div>
-                                 <div><strong>Employees:</strong> <span id="employees">-</span></div>
-                                 <div><strong>Founded:</strong> <span id="founded">-</span></div>
-                             </div>
-                         </div>
-                     </div>
+                      <div class="company-info">
+                          <h3>Company Information</h3>
+                          <p id="companyDescription">Select a stock to view company information...</p>
+                          <div class="company-details">
+                              <div><strong>Sector:</strong> <span id="sector">-</span></div>
+                              <div><strong>Industry:</strong> <span id="industry">-</span></div>
+                              <div><strong>Employees:</strong> <span id="employees">-</span></div>
+                          </div>
+                      </div>
+                  </div>
 
-                     <div id="financial" class="tab-content">
-                         <h3>Financial Analysis</h3>
-                         <div class="chart-container">
-                             <canvas id="revenueChart"></canvas>
-                         </div>
-                         <div class="financial-metrics">
-                             <div class="metric-row">
-                                 <span>Gross Margin:</span>
-                                 <span id="grossMargin">-</span>
-                             </div>
-                             <div class="metric-row">
-                                 <span>Operating Margin:</span>
-                                 <span id="operatingMargin">-</span>
-                             </div>
-                             <div class="metric-row">
-                                 <span>Net Margin:</span>
-                                 <span id="netMargin">-</span>
-                             </div>
-                             <div class="metric-row">
-                                 <span>ROE:</span>
-                                 <span id="roe">-</span>
-                             </div>
-                             <div class="metric-row">
-                                 <span>ROA:</span>
-                                 <span id="roa">-</span>
-                             </div>
-                             <div class="metric-row">
-                                 <span>Debt-to-Equity:</span>
-                                 <span id="debtToEquity">-</span>
-                             </div>
-                         </div>
-                     </div>
+                  <div id="financial" class="tab-content">
+                      <h3>Financial Analysis</h3>
+                      <div class="financial-metrics">
+                          <div class="metric-row">
+                              <span>Gross Margin:</span>
+                              <span id="grossMargin">-</span>
+                          </div>
+                          <div class="metric-row">
+                              <span>Operating Margin:</span>
+                              <span id="operatingMargin">-</span>
+                          </div>
+                          <div class="metric-row">
+                              <span>Net Margin:</span>
+                              <span id="netMargin">-</span>
+                          </div>
+                          <div class="metric-row">
+                              <span>ROE:</span>
+                              <span id="roe">-</span>
+                          </div>
+                          <div class="metric-row">
+                              <span>ROA:</span>
+                              <span id="roa">-</span>
+                          </div>
+                      </div>
+                  </div>
 
-                     <div id="sentiment" class="tab-content">
-                         <h3>Market Sentiment</h3>
-                         <div class="sentiment-overview">
-                             <div class="sentiment-score">
-                                 <h4>Overall Sentiment</h4>
-                                 <div class="sentiment-gauge">
-                                     <span id="sentimentScore">Neutral</span>
-                                 </div>
-                             </div>
-                             <div class="analyst-ratings">
-                                 <h4>Analyst Ratings</h4>
-                                 <div id="analystRatings">
-                                     <div class="rating-item">
-                                         <span>Buy:</span>
-                                         <span id="buyRating">-</span>
-                                     </div>
-                                     <div class="rating-item">
-                                         <span>Hold:</span>
-                                         <span id="holdRating">-</span>
-                                     </div>
-                                     <div class="rating-item">
-                                         <span>Sell:</span>
-                                         <span id="sellRating">-</span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="news-section">
-                             <h4>Recent News</h4>
-                             <div id="newsContainer">
-                                 <div class="loading">Loading news...</div>
-                             </div>
-                         </div>
-                     </div>
+                  <div id="sentiment" class="tab-content">
+                      <h3>Market Sentiment</h3>
+                      <div class="sentiment-overview">
+                          <div class="sentiment-score">
+                              <h4>Overall Sentiment</h4>
+                              <div class="sentiment-gauge">
+                                  <span id="sentimentScore">Neutral</span>
+                              </div>
+                          </div>
+                          <div class="analyst-ratings">
+                              <h4>Analyst Ratings</h4>
+                              <div id="analystRatings">
+                                  <div class="rating-item">
+                                      <span>Buy:</span>
+                                      <span id="buyRating">-</span>
+                                  </div>
+                                  <div class="rating-item">
+                                      <span>Hold:</span>
+                                      <span id="holdRating">-</span>
+                                  </div>
+                                  <div class="rating-item">
+                                      <span>Sell:</span>
+                                      <span id="sellRating">-</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
 
-                     <div id="technical" class="tab-content">
-                         <h3>Technical Analysis</h3>
-                         <div class="chart-container">
-                             <canvas id="priceChart"></canvas>
-                         </div>
-                         <div class="technical-indicators">
-                             <div class="indicator-row">
-                                 <span>RSI (14):</span>
-                                 <span id="rsi">-</span>
-                             </div>
-                             <div class="indicator-row">
-                                 <span>MACD:</span>
-                                 <span id="macd">-</span>
-                             </div>
-                             <div class="indicator-row">
-                                 <span>Moving Average (50):</span>
-                                 <span id="ma50">-</span>
-                             </div>
-                             <div class="indicator-row">
-                                 <span>Moving Average (200):</span>
-                                 <span id="ma200">-</span>
-                             </div>
-                             <div class="indicator-row">
-                                 <span>Support Level:</span>
-                                 <span id="supportLevel">-</span>
-                             </div>
-                             <div class="indicator-row">
-                                 <span>Resistance Level:</span>
-                                 <span id="resistanceLevel">-</span>
-                             </div>
-                         </div>
-                     </div>
+                  <div id="technical" class="tab-content">
+                      <h3>Technical Analysis</h3>
+                      <div class="technical-indicators">
+                          <div class="indicator-row">
+                              <span>RSI (14):</span>
+                              <span id="rsi">-</span>
+                          </div>
+                          <div class="indicator-row">
+                              <span>MACD:</span>
+                              <span id="macd">-</span>
+                          </div>
+                          <div class="indicator-row">
+                              <span>Moving Average (50):</span>
+                              <span id="ma50">-</span>
+                          </div>
+                          <div class="indicator-row">
+                              <span>Moving Average (200):</span>
+                              <span id="ma200">-</span>
+                          </div>
+                      </div>
+                  </div>
 
-                     <div id="compare" class="tab-content">
-                         <h3>Compare Assets</h3>
-                         <div class="compare-section">
-                             <select id="compareStock">
-                                 <option value="">Select stock to compare</option>
-                             </select>
-                             <div id="comparisonTable">
-                                 <table>
-                                     <thead>
-                                         <tr>
-                                             <th>Metric</th>
-                                             <th id="stock1Header">Stock 1</th>
-                                             <th id="stock2Header">Stock 2</th>
-                                         </tr>
-                                     </thead>
-                                     <tbody id="comparisonBody">
-                                     </tbody>
-                                 </table>
-                             </div>
-                         </div>
-                     </div>
+                  <div id="compare" class="tab-content">
+                      <h3>Compare Assets</h3>
+                      <div class="compare-section">
+                          <p>Select two stocks to compare their metrics</p>
+                      </div>
+                  </div>
 
-                     <div id="valuation" class="tab-content">
-                         <h3>Value Investor Analysis</h3>
-                         <div class="valuation-metrics">
-                             <div class="metric-card">
-                                 <h4>Intrinsic Value</h4>
-                                 <span id="intrinsicValue">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>Price to Book</h4>
-                                 <span id="priceToBook">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>PEG Ratio</h4>
-                                 <span id="pegRatio">-</span>
-                             </div>
-                             <div class="metric-card">
-                                 <h4>Free Cash Flow</h4>
-                                 <span id="freeCashFlow">-</span>
-                             </div>
-                         </div>
-                         <div class="investment-thesis">
-                             <h4>Investment Thesis</h4>
-                             <div class="swot-analysis">
-                                 <div class="swot-section">
-                                     <h5>Strengths</h5>
-                                     <ul id="strengths"></ul>
-                                 </div>
-                                 <div class="swot-section">
-                                     <h5>Weaknesses</h5>
-                                     <ul id="weaknesses"></ul>
-                                 </div>
-                                 <div class="swot-section">
-                                     <h5>Opportunities</h5>
-                                     <ul id="opportunities"></ul>
-                                 </div>
-                                 <div class="swot-section">
-                                     <h5>Threats</h5>
-                                     <ul id="threats"></ul>
-                                 </div>
-                             </div>
-                             <div class="recommendation">
-                                 <h5>Recommendation</h5>
-                                 <p id="recommendation">Select a stock to view investment recommendation</p>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
+                  <div id="valuation" class="tab-content">
+                      <h3>Value Investor Analysis</h3>
+                      <div class="valuation-metrics">
+                          <div class="metric-card">
+                              <h4>Price to Book</h4>
+                              <span id="priceToBook">-</span>
+                          </div>
+                          <div class="metric-card">
+                              <h4>PEG Ratio</h4>
+                              <span id="pegRatio">-</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-         <script src="config.js"></script>
-         <script src="script.js"></script>
-     </body>
-     </html>
+      <script src="config.js"></script>
+      <script src="script.js"></script>
+  </body>
+  </html>
