@@ -1,6 +1,6 @@
   {
     "name": "sp500-stock-analysis-dashboard",
-    "version": "1.0.0",
+    "version": "1.0.0", 
     "description": "S&P 500 Stock Analysis Dashboard",
     "main": "index.html",
     "scripts": {
