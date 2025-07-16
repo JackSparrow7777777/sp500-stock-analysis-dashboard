@@ -2,7 +2,7 @@
   document.addEventListener('DOMContentLoaded', function() {
       console.log('Page loaded, initializing...');
       setTimeout(function() {
-          initializeApp();
+          initializeApp(); 
       }, 500);
   });
 
